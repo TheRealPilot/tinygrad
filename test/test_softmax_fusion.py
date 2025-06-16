@@ -6,6 +6,11 @@ from tinygrad.helpers import DEBUG, get_single_element
 from tinygrad.engine.realize import lower_schedule_item
 from tinygrad.device import is_dtype_supported
 
+"""starting my edits here. Objectives:
+1. understand what single_kernel_softmax is doing
+2. Fix code to pass softmax fusion tests
+"""
+
 def single_kernel_softmax(x_in:Tensor, axis=-1, dtype:DTypeLike|None=None) -> Tensor:
   # only support axis =-1
   x = x_in.reshape(-1, x_in.shape[-1])
@@ -174,4 +179,10 @@ class TestSoftmaxFusion(unittest.TestCase):
       np.testing.assert_allclose(sg.numpy(), g.numpy(), atol=1e-7)
 
 if __name__ == '__main__':
-  unittest.main()
+  #unittest.main()
+
+  t = Tensor.rand(4, 4)
+  #sft = t.softmax() # softmax is a complex ops
+  print(t.numpy())
+
+
